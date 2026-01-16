@@ -1,8 +1,8 @@
 <div align="center">
 
-![Logo](media/logo.png)
+<img src="media/logo.png" alt="Logo" width="250">
 
-# A Recursive Language Model for the Human Action Book
+# Recursive Language Model for Human Action
 
 ![Preview](media/preview.gif)
 
@@ -16,9 +16,7 @@
 
 ---
 
-## Introduction
-
-**Human Action** by Ludwig von Mises is a monumental and profoundly complex work—spanning over 900 pages of dense economic theory, philosophy, and social analysis. What better opportunity to explore and learn from Mises's masterpiece than by leveraging cutting-edge technology designed to process massive digital texts?
+**Human Action** by Ludwig von Mises is a monumental and profoundly complex work spanning over 900 pages of dense economic theory, philosophy, and social analysis. What better opportunity to explore and learn from Mises's masterpiece than by leveraging cutting-edge technology designed to process massive digital texts?
 
 This project harnesses the power of **Recursive Language Models (RLM)**, an innovative architecture that enables deep, contextual understanding of enormous documents. By processing the entirety of "Human Action," this system allows users to query, explore, and engage with Mises's ideas in an interactive and meaningful way. Whether you're a student of Austrian economics, a researcher, or simply curious about praxeology, this tool transforms a challenging read into an accessible, conversational experience.
 
