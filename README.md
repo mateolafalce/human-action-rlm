@@ -30,15 +30,6 @@ cd human-action-rlm
 pip install -r requirements.txt
 ```
 
-The following packages will be installed:
-- `openai` - For LLM API integration
-- `dotenv` - For environment variable management
-- `rich` - For enhanced terminal output
-- `requests` - For HTTP requests
-- `beautifulsoup4` - For HTML parsing
-- `flask` - Web framework for the frontend
-- `flask-cors` - CORS support for Flask
-
 ### Environment Configuration
 
 Before running the server, you need to configure your environment variables:
