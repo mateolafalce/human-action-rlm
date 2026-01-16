@@ -1,10 +1,12 @@
 .env
 *.DS_Store
+human_action.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
 *$py.class
+venv
 
 # C extensions
 *.so

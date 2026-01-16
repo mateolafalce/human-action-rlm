@@ -1,3 +1,7 @@
 openai
 dotenv
 rich
+requests
+beautifulsoup4
+flask
+flask-cors

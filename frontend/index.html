@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Action RLM - Query System</title>
+    <meta name="description" content="Query interface for Ludwig von Mises' Human Action book using RLM">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <img src="/media/mises.jpg" alt="Ludwig von Mises" class="logo-image">
+                    <div>
+                        <h1 class="title">Human Action RLM</h1>
+                        <p class="subtitle">Intelligent query system about Ludwig von Mises</p>
+                    </div>
+                </div>
+                <div class="status-indicator" id="statusIndicator">
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Query Input Section -->
+            <section class="query-section">
+                <div class="input-container">
+                    <label for="queryInput" class="input-label">
+                        <span class="label-icon">🔍</span>
+                        Enter your query
+                    </label>
+                    <textarea id="queryInput" class="query-input"
+                        placeholder="Example: Quote me what Mises tell about The Prerequisites of Human Action"
+                        rows="4"></textarea>
+                    <div class="input-actions">
+                        <button id="submitBtn" class="submit-btn">
+                            <span class="btn-icon">✨</span>
+                            <span class="btn-text">Submit Query</span>
+                        </button>
+                        <button id="clearBtn" class="clear-btn">
+                            <span class="btn-icon">🗑️</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Examples -->
+                <div class="examples-section">
+                    <p class="examples-title">Query examples:</p>
+                    <div class="examples-grid">
+                        <button class="example-chip" data-query="What does Mises say about human action?">
+                            Human Action
+                        </button>
+                        <button class="example-chip"
+                            data-query="According to Mises, the essential mark of socialism is ...">
+                            Socialism
+                        </button>
+                        <button class="example-chip"
+                            data-query="What are the prerequisites of human action according to Mises?">
+                            Prerequisites
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loading Section -->
+            <div id="loadingSection" class="loading-section hidden">
+                <div class="loader-container">
+                    <div class="loader">
+                        <div class="loader-ring"></div>
+                        <div class="loader-ring"></div>
+                        <div class="loader-ring"></div>
+                        <div class="loader-core"></div>
+                    </div>
+                    <p class="loading-text">Processing your query...</p>
+                    <p class="loading-subtext">The RLM is analyzing the context</p>
+                </div>
+            </div>
+
+            <!-- Result Section -->
+            <section id="resultSection" class="result-section hidden">
+                <div class="result-header">
+                    <h2 class="result-title">
+                        <span class="result-icon">💡</span>
+                        Answer
+                    </h2>
+                    <button id="newQueryBtn" class="new-query-btn">
+                        New Query
+                    </button>
+                </div>
+
+                <div class="query-display">
+                    <p class="query-label">Your query:</p>
+                    <p id="queryDisplay" class="query-text"></p>
+                </div>
+
+                <div class="result-content">
+                    <div id="resultText" class="result-text"></div>
+                </div>
+
+                <div class="result-actions">
+                    <button id="copyBtn" class="action-btn">
+                        <span class="btn-icon">📋</span>
+                        <span class="btn-text">Copy</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Error Section -->
+            <div id="errorSection" class="error-section hidden">
+                <div class="error-content">
+                    <span class="error-icon">⚠️</span>
+                    <h3 class="error-title">Error</h3>
+                    <p id="errorText" class="error-text"></p>
+                    <button id="retryBtn" class="retry-btn">Retry</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="footer-text">
+                Based on <strong>Human Action</strong> by Ludwig von Mises |
+                Powered by RLM
+            </p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

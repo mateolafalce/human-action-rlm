@@ -1,40 +1,93 @@
+from flask import Flask, render_template, request, jsonify, send_from_directory
+from flask_cors import CORS
 from rlm.rlm_repl import RLM_REPL
-import random
+from human_action_utils import human_action_book
+import os
 
-def generate_massive_context(num_lines: int = 1_000_000, answer: str = "1298418") -> str:
-    print("Generating massive context with 1M lines...")
-    
-    # Set of random words to use
-    random_words = ["blah", "random", "text", "data", "content", "information", "sample"]
-    
-    lines = []
-    for _ in range(num_lines):
-        num_words = random.randint(3, 8)
-        line_words = [random.choice(random_words) for _ in range(num_words)]
-        lines.append(" ".join(line_words))
-    
-    # Insert the magic number at a random position (somewhere in the middle)
-    magic_position = random.randint(400000, 600000)
-    lines[magic_position] = f"The magic number is {answer}"
-    
-    print(f"Magic number inserted at position {magic_position}")
-    
-    return "\n".join(lines)
+app = Flask(__name__, 
+            static_folder='frontend',
+            template_folder='frontend')
+CORS(app)
 
-def main():
-    print("Example of using RLM (REPL) with GPT-5-nano on a needle-in-haystack problem.")
-    answer = str(random.randint(1000000, 9999999))
-    context = generate_massive_context(num_lines=1_000_000, answer=answer)
+# Inicializar el contexto una sola vez al arrancar el servidor
+context = None
+rlm = None
 
-    rlm = RLM_REPL(
-        model="gpt-5",
-        recursive_model="gpt-5-nano",
-        enable_logging=True,
-        max_iterations=10
-    )
-    query = "I'm looking for a magic number. What is it?"
-    result = rlm.completion(context=context, query=query)
-    print(f"Result: {result}. Expected: {answer}")
+def initialize_rlm():
+    """Inicializa el RLM y carga el contexto del libro"""
+    global context, rlm
+    if context is None:
+        print("📚 Cargando el libro 'Human Action'...")
+        context = human_action_book()
+        print("✅ Libro cargado exitosamente")
+    
+    if rlm is None:
+        print("🤖 Inicializando RLM...")
+        rlm = RLM_REPL(
+            model="gpt-5",
+            recursive_model="gpt-5-nano",
+            enable_logging=True,
+            max_iterations=10
+        )
+        print("✅ RLM inicializado")
 
-if __name__ == "__main__":
-    main()
+@app.route('/')
+def index():
+    """Sirve el archivo index.html"""
+    return render_template('index.html')
+
+@app.route('/media/<path:filename>')
+def serve_media(filename):
+    """Sirve archivos desde la carpeta media"""
+    return send_from_directory('media', filename)
+
+@app.route('/api/query', methods=['POST'])
+def process_query():
+    """Procesa una query y devuelve el resultado"""
+    try:
+        data = request.get_json()
+        query = data.get('query', '')
+        
+        if not query:
+            return jsonify({'error': 'Query vacía'}), 400
+        
+        # Asegurarse de que RLM está inicializado
+        initialize_rlm()
+        
+        # Procesar la query
+        print(f"🔍 Procesando query: {query}")
+        result = rlm.completion(context=context, query=query)
+        print(f"✅ Query procesada exitosamente")
+        
+        return jsonify({
+            'success': True,
+            'result': result,
+            'query': query
+        })
+        
+    except Exception as e:
+        print(f"❌ Error procesando query: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """Endpoint para verificar el estado del servidor"""
+    return jsonify({
+        'status': 'ok',
+        'rlm_initialized': rlm is not None,
+        'context_loaded': context is not None
+    })
+
+if __name__ == '__main__':
+    # Inicializar RLM al arrancar
+    initialize_rlm()
+    
+    # Arrancar el servidor
+    port = int(os.environ.get('PORT', 5000))
+    print(f"\n🚀 Servidor corriendo en http://localhost:{port}")
+    print(f"📖 Frontend disponible en http://localhost:{port}\n")
+    
+    app.run(host='0.0.0.0', port=port, debug=True)
