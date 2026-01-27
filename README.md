@@ -4,15 +4,11 @@
 
 # Recursive Language Model for Human Action
 
-![Preview](media/preview.gif)
+[Link X demo](https://x.com/lafalcemateo/status/2011977350972350879)
 
 </div>
 
-[Link to the official RLM codebase](https://github.com/alexzhang13/rlm)
 
-[Link to the paper](https://arxiv.org/abs/2512.24601v1)
-
-[Link to the original blogpost 📝](https://alexzhang13.github.io/blog/2025/rlm/)
 
 ---
 
