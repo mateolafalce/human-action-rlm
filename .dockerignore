@@ -1,0 +1,9 @@
+.git
+.gitignore
+.venv
+.env
+__pycache__/
+*.py[cod]
+*.log
+human_action.txt
+media/preview.gif
