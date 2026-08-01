@@ -23,7 +23,8 @@ Clone the repository and install the required dependencies:
 ```bash
 git clone https://github.com/mateolafalce/human-action-rlm.git
 cd human-action-rlm
-pip install -r requirements.txt
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt
 ```
 
 ### Environment Configuration
@@ -32,7 +33,7 @@ Before running the server, you need to configure your environment variables:
 
 1. Copy the example environment file:
    ```bash
-   cp .env-example .env
+   cp .env.example .env
    ```
 
 2. Edit the `.env` file and add your API keys:
@@ -61,3 +62,13 @@ Once running, you can access: `http://localhost:5000`
 
 The server will display startup messages indicating when the book is loaded and the RLM is ready to accept queries.
 
+## Docker
+
+Build the multi-stage image and run it with your environment file:
+
+```bash
+docker build --tag human-action-rlm .
+docker run --rm --publish 5000:5000 --env-file .env human-action-rlm
+```
+
+The application is available at `http://localhost:5000`. The first query downloads and loads the book before it is processed.
